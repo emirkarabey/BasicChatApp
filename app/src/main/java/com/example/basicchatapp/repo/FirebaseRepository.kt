@@ -3,8 +3,11 @@ package com.example.basicchatapp.repo
 import android.view.View
 import androidx.navigation.findNavController
 import com.example.basicchatapp.R
+import com.example.basicchatapp.databinding.FragmentChatBinding
 import com.example.basicchatapp.databinding.FragmentLoginBinding
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FieldValue
+import com.google.firebase.firestore.FirebaseFirestore
 
 class FirebaseRepository (){
 
@@ -27,5 +30,26 @@ class FirebaseRepository (){
             .addOnFailureListener {
                 it.localizedMessage
             }
+    }
+
+    fun sendMessage(auth: FirebaseAuth,binding: FragmentChatBinding,db:FirebaseFirestore){
+        auth.currentUser.let {
+            var sender = auth.currentUser!!.email
+            var message = binding.chatText.text.toString()
+            var date = FieldValue.serverTimestamp()
+
+            val messageMap = HashMap<String,Any>()
+            messageMap.put("sender",sender!!)
+            messageMap.put("message",message)
+            messageMap.put("date",date)
+
+            db.collection("Chats").add(messageMap)
+                .addOnSuccessListener {
+                    println("succes")
+                }
+                .addOnFailureListener {
+                    println(it.localizedMessage)
+                }
+        }
     }
 }

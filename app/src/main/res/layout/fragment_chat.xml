@@ -22,7 +22,7 @@
         android:id="@+id/chat_text"
         android:layout_width="300dp"
         android:layout_height="50dp"
-        android:text="sadasdasdasdasd"
+        android:hint="enter text..."
         android:textSize="17sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
