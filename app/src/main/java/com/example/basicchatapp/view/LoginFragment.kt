@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.Navigation.findNavController
 import androidx.navigation.findNavController
 import com.example.basicchatapp.R
 import com.example.basicchatapp.databinding.FragmentLoginBinding
@@ -25,12 +26,9 @@ class LoginFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         auth = Firebase.auth
-        arguments?.let {
 
-        }
     }
-
-    override fun onCreateView(
+     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
@@ -43,6 +41,11 @@ class LoginFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        val currentUser = auth.currentUser
+        if(currentUser!=null){
+            view.findNavController().navigate(R.id.action_loginFragment_to_chatFragment)
+
+        }
         binding.signUpButton.setOnClickListener {
             viewModel.signUp(auth,binding,view)
         }
