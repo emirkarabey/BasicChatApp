@@ -1,13 +1,17 @@
 package com.example.basicchatapp.repo
 
 import android.view.View
+import androidx.lifecycle.MutableLiveData
 import androidx.navigation.findNavController
 import com.example.basicchatapp.R
 import com.example.basicchatapp.databinding.FragmentChatBinding
 import com.example.basicchatapp.databinding.FragmentLoginBinding
+import com.example.basicchatapp.model.Chat
+import com.google.firebase.Timestamp
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.Query
 
 class FirebaseRepository (){
 
@@ -51,5 +55,30 @@ class FirebaseRepository (){
                     println(it.localizedMessage)
                 }
         }
+    }
+    var list = mutableListOf<Chat>()
+    fun getAllMessage(db:FirebaseFirestore,messageLiveData:MutableLiveData<List<Chat>>){
+        db.collection("Chats").orderBy("date",Query.Direction.ASCENDING)
+            .addSnapshotListener { value, error ->
+                if (error!=null){
+                    println(error.localizedMessage)
+                }else{
+                    if (value!=null){
+                        if (value.isEmpty){
+                            println("value boş")
+                        }else{
+                            val documents = value.documents
+                            list.clear()
+                            for (document in documents){
+                                val text = document.get("message") as String
+                                val sender = document.get("sender") as String
+                                val date = document.get("date") as? Timestamp
+                                list.add(Chat(sender,text,date))
+                                messageLiveData.postValue(list)
+                            }
+                        }
+                    }
+                }
+            }
     }
 }

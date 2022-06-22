@@ -1,3 +1,6 @@
 package com.example.basicchatapp.model
 
-data class Chat(val user:String,val message:String)
+import com.google.firebase.Timestamp
+import com.google.firebase.firestore.FieldValue
+
+data class Chat(val sender:String,val message:String,val date:Timestamp?)
