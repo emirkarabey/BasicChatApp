@@ -1,12 +1,12 @@
 package com.example.basicchatapp.view
 
 import android.os.Bundle
+import android.view.*
 import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
+import androidx.navigation.Navigation
+import androidx.navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.basicchatapp.R
@@ -35,6 +35,7 @@ class ChatFragment : Fragment() {
     private val list = arrayListOf<Chat>()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        setHasOptionsMenu(true)
         db = Firebase.firestore
         auth = Firebase.auth
         arguments?.let {
@@ -72,8 +73,20 @@ class ChatFragment : Fragment() {
                 }
             }
         })
+    }
 
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        super.onCreateOptionsMenu(menu, inflater)
+        inflater.inflate(R.menu.menu_chat,menu)
+    }
 
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+
+        if (item.itemId == R.id.log_out){
+            auth.signOut()
+            view!!.findNavController().navigate(R.id.action_chatFragment_to_loginFragment)
+        }
+        return super.onOptionsItemSelected(item)
     }
 
     override fun onDestroyView() {
