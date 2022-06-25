@@ -4,6 +4,11 @@ A simple messaging android app.
 
 <img src="https://github.com/webianks/HatkeMessenger/blob/master/screens/ic_launcher.png" height="128" width="128" >
 
+# App Gif
+![basicchatapp](https://user-images.githubusercontent.com/63194364/175769149-f1a986df-4419-473a-9abe-7c40350c6936.gif)
+
+
+
 # Screens
 <img src="https://github.com/emirkarabey/BasicChatApp/blob/master/screens/Ekran%20g%C3%B6r%C3%BCnt%C3%BCs%C3%BC%202022-06-24%20155820.png" align="left" height="700" width="400" >
 <img src="https://github.com/emirkarabey/BasicChatApp/blob/master/screens/Ekran%20g%C3%B6r%C3%BCnt%C3%BCs%C3%BC%202022-06-24%20160017.png"  height="700" width="400" >
